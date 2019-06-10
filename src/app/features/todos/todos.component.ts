@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { Todo } from 'app/shared/model/todo/todo.model';
 
 @Component({
@@ -10,8 +12,12 @@ export class TodosComponent implements OnInit {
   todos: Todo[];
   action: String;
   counter: any;
+  posts: Observable<any[]>;
 
-  constructor() {}
+  constructor(db: AngularFirestore) {
+    this.posts = db.collection('posts').valueChanges();
+    console.log(this.posts);
+  }
 
   ngOnInit() {
     this.action = 'all';
