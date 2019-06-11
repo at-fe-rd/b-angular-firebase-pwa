@@ -68,4 +68,6 @@ key.pem
 .firebase/
 .firebase/*
 
+src/environments
+src/environments/
 src/environments/*
