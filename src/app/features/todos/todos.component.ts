@@ -1,22 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { Todo } from 'app/shared/model/todo/todo.model';
 
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html'
 })
-export class TodosComponent implements OnInit {
+export class TodosComponent implements OnInit, OnDestroy {
 
   todos: Todo[];
   action: String;
   counter: any;
-  posts: Observable<any[]>;
+  posts: any;
+  subcription: any;
 
-  constructor(db: AngularFirestore) {
-    this.posts = db.collection('posts').valueChanges();
-    console.log(this.posts);
+  constructor(private firestore: AngularFirestore) {
+    this.subcription = this.firestore.collection('posts').snapshotChanges().subscribe((data: any) => {
+      this.posts = data;
+    }, (err: any) => {
+      console.log('error firestore ->', err);
+    });
+  }
+
+  ngOnDestroy() {
+    this.subcription.unsubscribe();
   }
 
   ngOnInit() {

@@ -18,9 +18,16 @@ export class AuthService {
   logout() {
     localStorage.removeItem('access-token');
     localStorage.removeItem('uid');
-    localStorage.removeItem('client');
+    // localStorage.removeItem('client');
     this.redirectToLogin();
     this.logger.next(false);
+  }
+
+  setToken(data) {
+    localStorage.setItem('access-token', data.accessToken);
+    localStorage.setItem('uid', data.uid);
+    this.logger.next(true);
+    this.redirectToPrevStep();
   }
 
   postLogin(body: any) {
@@ -28,7 +35,7 @@ export class AuthService {
       (res: any) => {
         localStorage.setItem('access-token', res['access-token']);
         localStorage.setItem('uid', res['uid']);
-        localStorage.setItem('client', res['client']);
+        // localStorage.setItem('client', res['client']);
         this.logger.next(true);
         this.redirectToPrevStep();
       },
@@ -99,5 +106,7 @@ export class AuthService {
     window.scroll(0, 0);
     this.router.navigate(['/auth/login']);
   }
+
+
 
 }
