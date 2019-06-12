@@ -2,11 +2,6 @@
   <app-todos-header (addTodo)="onChange('add', $event)"></app-todos-header>
   <section class="todos-main">
     <ul class="todo-list">
-      <li *ngFor="let todo of posts">
-        Test Firestore
-      </li>
-    </ul>
-    <ul class="todo-list">
       <app-todo-item *ngFor="let todo of todos | todoFilter:action; trackBy: todoId"
                     [todo]="todo"
                     (deleteMe)="onChange('delete', $event)"

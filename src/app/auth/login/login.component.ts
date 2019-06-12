@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
   errorMsgs: any;
 
   constructor(
+    firebaseAuth: FirebaseAuthService,
     private auth: AuthService,
-    private router: Router,
-    private firebaseAuth: FirebaseAuthService
+    private router: Router
   ) {
     // this.canAction = true;
     // this.auth.logger.subscribe((data: any) => {
