@@ -35,7 +35,6 @@ export class TodosComponent implements OnInit, OnDestroy {
     }, (err: any) => {
       //
     });
-    // this.subcription$ = this.todoRef.valueChanges()
   }
 
   ngOnDestroy() {
