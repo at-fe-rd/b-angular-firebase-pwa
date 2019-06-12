@@ -5,6 +5,7 @@ export class Todo {
   isCompleted: boolean;
   // just for handle animation
   isDeleting: boolean;
+  did: string;
 
   constructor(name = '') {
     this.id = new Date().getTime();
