@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { Todo } from 'app/shared/model/todo/todo.model';
-import { environment } from './environments/environment';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -18,7 +17,7 @@ export class TodosComponent implements OnInit, OnDestroy {
   todoRef: AngularFirestoreCollection<Todo>;
 
   constructor(private firestore: AngularFirestore) {
-    this.todoRef = this.firestore.collection<Todo>('todos');
+    this.todoRef = this.firestore.collection<Todo>('todos', ref => ref.orderBy('id', 'asc'));
     this.todos = [];
     this.subcription$ = this.todoRef.snapshotChanges().pipe(
       map(actions => actions.map(a => {
