@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   errorMsgs: any;
 
   constructor(
-    firebaseAuth: FirebaseAuthService,
+    public firebaseAuth: FirebaseAuthService,
     private auth: AuthService,
     private router: Router
   ) {
