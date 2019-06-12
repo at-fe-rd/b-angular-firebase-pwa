@@ -70,17 +70,24 @@ export class TodosComponent implements OnInit, OnDestroy {
           });
         }, 500);
         break
+      case 'completed':
+        this.todoRef.doc(todo.did).update(todo).catch((err) => {
+          // not found doc
+        });
+        break
       case 'finish':
         // just for animation handling
         const completedItems = this.todos.filter((item: Todo) => {
           if (item.isCompleted) {
             item.isDeleting = true;
           }
-          return !item.isCompleted;
+          return item.isCompleted;
         });
-        setTimeout(() => {
-          this.todos = completedItems
-        }, 500);
+        completedItems.forEach((item: Todo) => {
+          this.todoRef.doc(item.did).delete().catch((err) => {
+            // not found doc
+          });
+        });
         break
       default: break;
     }

@@ -10,7 +10,7 @@
       <app-todo-item *ngFor="let todo of todos | todoFilter:action; trackBy: todoId"
                     [todo]="todo"
                     (deleteMe)="onChange('delete', $event)"
-                    (toggleMe)="onChange()"
+                    (toggleMe)="onChange('completed', $event)"
                     ng-non-bindable>
       </app-todo-item>
     </ul>
