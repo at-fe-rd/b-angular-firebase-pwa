@@ -1,15 +1,19 @@
 import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
-import { AuthService } from '../service/auth/auth.service';
-import { I18N_PROVIDERS } from '../service/i18n/i18n.service';
-import { AuthGuard } from '../service/auth/auth-guard';
-import { API_PROVIDERS } from '../service/api/api.service';
-import { TokenInterceptorService } from '../service/auth/token-interceptor.service';
-
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthService } from '../service/auth/auth.service';
+import { AuthGuard } from '../service/auth/auth-guard';
+import { TokenInterceptorService } from '../service/auth/token-interceptor.service';
+import { I18N_PROVIDERS } from '../service/i18n/i18n.service';
+import { API_PROVIDERS } from '../service/api/api.service';
+import { FirebaseAuthService } from '../service/firebase/firebase-auth.service';
+import { FirebaseAuthGuard } from '../service/firebase/firebase-auth-guard';
+
 
 const AUTH_PROVIDERS = [
   AuthService,
-  AuthGuard
+  AuthGuard,
+  FirebaseAuthService,
+  FirebaseAuthGuard
 ];
 
 @NgModule({

@@ -1,22 +1,19 @@
 import { Routes } from '@angular/router';
 import { FeatureComponent } from './feature.component';
 import { AuthGuard } from '../core/service/auth/auth-guard';
-import { homeRoutes } from './home/home.routing';
-import { postRoutes } from './post/post.routing';
-import { postDetailRoutes } from './post-detail/post-detail.routing';
-import { filterRoutes } from './filter/filter.routing';
-import { searchPageRoutes } from './search-page/search-page.routing';
+import { FirebaseAuthGuard } from '../core/service/firebase/firebase-auth-guard';
 
 
 export const featureRoutes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [FirebaseAuthGuard]
   },
   {
     path: '',
     component: FeatureComponent,
-    canActivate: [AuthGuard]
+    canActivate: [FirebaseAuthGuard]
   }
 ];

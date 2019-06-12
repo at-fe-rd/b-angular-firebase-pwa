@@ -9,7 +9,7 @@ import { auth } from 'firebase/app';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth/auth.service';
 
 interface User {
   uid: string;
@@ -23,7 +23,7 @@ interface User {
   providedIn: 'root'
 })
 
-export class AuthFirebaseService {
+export class FirebaseAuthService {
   user: Observable<any>;
 
   constructor(private router: Router, private afAuth: AngularFireAuth, private afs: AngularFirestore, private authService: AuthService) {
@@ -43,19 +43,18 @@ export class AuthFirebaseService {
 
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then((credential: any) => {
-      this.authService.setToken({
-        accessToken: credential.credential.accessToken,
-        uid: credential.user.uid
+      // this.authService.setToken({
+      //   accessToken: credential.credential.accessToken,
+      //   uid: credential.user.uid
+      // });
+      this.updateUserData(credential.user).then((data) => {
+        // console.log(data);
+      }).catch((error) => {
+        console.log('update error', error);
       });
-      //   this.updateUserData(credential.user).then((data) => {
-      //     console.log(data);
-      //   }).catch((error) => {
-      //     console.log('error', error);
-      //   });
-      //   console.log('success', credential);
-      //   this.router.navigate(['/']);
+      this.router.navigate(['/']);
     }).catch((error) => {
-      console.log('error', error);
+      console.log('signup error', error);
     });
   }
 

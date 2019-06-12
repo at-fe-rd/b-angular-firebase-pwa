@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../core/service/auth/auth.service';
-import { AuthFirebaseService } from '../../core/service/auth/auth-firebase.service';
+import { FirebaseAuthService } from '../../core/service/firebase/firebase-auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,19 +12,18 @@ export class LoginComponent implements OnInit {
 
   canAction: boolean;
   hasError: boolean;
-  authenticator$: any;
   errorMsgs: any;
 
   constructor(
     private auth: AuthService,
     private router: Router,
-    private authFirebase: AuthFirebaseService
+    private firebaseAuth: FirebaseAuthService
   ) {
-    this.canAction = true;
-    this.auth.logger.subscribe((data: any) => {
-      this.errorMsgs = data;
-      this.canAction = true;
-    })
+    // this.canAction = true;
+    // this.auth.logger.subscribe((data: any) => {
+    //   this.errorMsgs = data;
+    //   this.canAction = true;
+    // })
   }
 
   ngOnInit() {

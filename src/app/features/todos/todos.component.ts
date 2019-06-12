@@ -13,18 +13,18 @@ export class TodosComponent implements OnInit, OnDestroy {
   action: String;
   counter: any;
   posts: any;
-  subcription: any;
+  subcription$: any;
 
   constructor(private firestore: AngularFirestore) {
-    this.subcription = this.firestore.collection('posts').snapshotChanges().subscribe((data: any) => {
-      this.posts = data;
+    this.subcription$ = this.firestore.collection('todos').snapshotChanges().subscribe((data: any) => {
+      this.todos = data;
     }, (err: any) => {
-      console.log('error firestore ->', err);
+      //
     });
   }
 
   ngOnDestroy() {
-    this.subcription.unsubscribe();
+    this.subcription$.unsubscribe();
   }
 
   ngOnInit() {
