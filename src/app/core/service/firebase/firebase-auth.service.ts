@@ -34,6 +34,7 @@ export class FirebaseAuthService {
         return of(null);
       }
     }));
+    // this.afAuth.auth.signOut();
   }
 
   googleLogin() {
@@ -43,10 +44,9 @@ export class FirebaseAuthService {
 
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then((credential: any) => {
-      // this.authService.setToken({
-      //   accessToken: credential.credential.accessToken,
-      //   uid: credential.user.uid
-      // });
+      this.setToken({
+        uid: credential.user.uid
+      });
       this.updateUserData(credential.user).then((data) => {
         // console.log(data);
       }).catch((error) => {
@@ -67,6 +67,18 @@ export class FirebaseAuthService {
       displayName: user.displayName,
     };
     return userRef.set(data, { merge: true });
+  }
+
+  getToken() {
+    return localStorage.getItem('uid');
+  }
+
+  setToken(data) {
+    localStorage.setItem('uid', data.uid);
+  }
+
+  removeToken() {
+    localStorage.removeItem('uid');
   }
 
   signOut() {

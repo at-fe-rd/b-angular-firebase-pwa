@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs/internal/Observable';
 import { Todo } from 'app/shared/model/todo/todo.model';
 import { map } from 'rxjs/operators';
+import { FirebaseAuthService } from 'app/core/service/firebase/firebase-auth.service';
 
 @Component({
   selector: 'app-todos',
@@ -14,26 +15,28 @@ export class TodosComponent implements OnInit, OnDestroy {
   action: String;
   counter: any;
   subcription$: any;
-  todoRef: AngularFirestoreCollection<Todo>;
+  todoCollection: AngularFirestoreCollection<Todo>;
+  currentUser: string;
 
-  constructor(private firestore: AngularFirestore) {
-    this.todoRef = this.firestore.collection<Todo>('todos', ref => ref.orderBy('id', 'asc'));
+  constructor(
+    private firestore: AngularFirestore,
+    private fas: FirebaseAuthService
+  ) {
+    this.currentUser = this.fas.getToken();
+    this.todoCollection = this.firestore.collection<Todo>('todos');
     this.todos = [];
-    this.subcription$ = this.todoRef.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Todo;
-        const did = a.payload.doc.id;
+    this.subcription$ = this.todoCollection.ref.where('owner_id', '==', this.currentUser).orderBy('id', 'asc')
+    .onSnapshot((snapshot) => {
+      this.todos = snapshot.docs.map(doc => {
+        const data = doc.data() as Todo;
+        const did = doc.id;
         return { did, ...data };
-      }))
-    ).subscribe((data: any) => {
-      this.todos = data;
+      });
       // update counter when data changed
       this.counter = this.todos.reduce((obj, item: Todo) => {
         item.isCompleted ? obj.completed++ : obj.active++;
         return obj;
       }, { active: 0, completed: 0 });
-    }, (err: any) => {
-      //
     });
   }
 
@@ -57,19 +60,23 @@ export class TodosComponent implements OnInit, OnDestroy {
     // handle action
     switch (action) {
       case 'add':
-        this.todoRef.add({...todo});
+        const obj = { owner_id: this.currentUser };
+        this.todoCollection.add({
+          ...{ owner_id: this.currentUser },
+          ...todo
+        });
         break
       case 'delete':
         // just for animation handling
         todo.isDeleting = true;
         setTimeout(() => {
-          this.todoRef.doc(todo.did).delete().catch((err) => {
+          this.todoCollection.doc(todo.did).delete().catch((err) => {
             // not found doc
           });
         }, 500);
         break
       case 'completed':
-        this.todoRef.doc(todo.did).update(todo).catch((err) => {
+        this.todoCollection.doc(todo.did).update(todo).catch((err) => {
           // not found doc
         });
         break
@@ -82,7 +89,7 @@ export class TodosComponent implements OnInit, OnDestroy {
           return item.isCompleted;
         });
         completedItems.forEach((item: Todo) => {
-          this.todoRef.doc(item.did).delete().catch((err) => {
+          this.todoCollection.doc(item.did).delete().catch((err) => {
             // not found doc
           });
         });
