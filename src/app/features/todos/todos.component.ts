@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs/internal/Observable';
 import { Todo } from 'app/shared/model/todo/todo.model';
-import { map } from 'rxjs/operators';
 import { FirebaseAuthService } from 'app/core/service/firebase/firebase-auth.service';
 
 @Component({
@@ -17,6 +15,7 @@ export class TodosComponent implements OnInit, OnDestroy {
   counter: any;
   todos: Todo[];
   todoCollection: AngularFirestoreCollection<Todo>;
+  subscription$: any;
 
   constructor(
     private firestore: AngularFirestore,
@@ -25,37 +24,41 @@ export class TodosComponent implements OnInit, OnDestroy {
     this.isInit = true;
     this.action = 'all';
     this.currentUser = this.fas.getToken();
-    this.counter = {
-      active: 0,
-      completed: 0
-    };
+    this.initCounter();
     this.todos = [];
-    this.todoCollection = this.firestore.collection<Todo>('todos');
+    this.todoCollection = this.firestore.collection<Todo>(
+      'todos',
+      ref => ref.where('owner_id', '==', this.currentUser).orderBy('id', 'asc')
+    );
   }
 
   ngOnDestroy() {
-    //
+    this.subscription$.unsubscribe();
   }
 
   ngOnInit() {
     // fetch and watch todos
-    this.todoCollection.ref
-    .orderBy('id', 'asc')
-    .where('owner_id', '==', this.currentUser)
-    .onSnapshot((snapshot) => {
+    this.subscription$ = this.todoCollection.snapshotChanges().subscribe((snapshots) => {
       // hidding loader
       this.isInit = false;
-      this.todos = snapshot.docs.map(doc => {
+      // reset counter
+      this.initCounter();
+      this.todos = snapshots.map(snapshot => {
+        const doc = snapshot.payload.doc;
         const data = doc.data() as Todo;
+        // updating counter when data changed
+        data.isCompleted ? this.counter.completed++ : this.counter.active++;
         const did = doc.id;
         return { did, ...data };
       });
-      // updating counter when data changed
-      this.counter = this.todos.reduce((obj, item: Todo) => {
-        item.isCompleted ? obj.completed++ : obj.active++;
-        return obj;
-      }, { active: 0, completed: 0 });
     });
+  }
+
+  initCounter() {
+    this.counter = {
+      active: 0,
+      completed: 0
+    };
   }
 
   todoId(index, todo) {
