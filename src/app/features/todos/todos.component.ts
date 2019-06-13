@@ -11,45 +11,51 @@ import { FirebaseAuthService } from 'app/core/service/firebase/firebase-auth.ser
 })
 export class TodosComponent implements OnInit, OnDestroy {
 
-  todos: Todo[];
-  action: String;
-  counter: any;
-  subcription$: any;
-  todoCollection: AngularFirestoreCollection<Todo>;
+  isInit: boolean;
+  action: string;
   currentUser: string;
+  counter: any;
+  todos: Todo[];
+  todoCollection: AngularFirestoreCollection<Todo>;
 
   constructor(
     private firestore: AngularFirestore,
     private fas: FirebaseAuthService
   ) {
+    this.isInit = true;
+    this.action = 'all';
     this.currentUser = this.fas.getToken();
-    this.todoCollection = this.firestore.collection<Todo>('todos');
+    this.counter = {
+      active: 0,
+      completed: 0
+    };
     this.todos = [];
-    this.subcription$ = this.todoCollection.ref.where('owner_id', '==', this.currentUser).orderBy('id', 'asc')
+    this.todoCollection = this.firestore.collection<Todo>('todos');
+  }
+
+  ngOnDestroy() {
+    //
+  }
+
+  ngOnInit() {
+    // fetch and watch todos
+    this.todoCollection.ref
+    .orderBy('id', 'asc')
+    .where('owner_id', '==', this.currentUser)
     .onSnapshot((snapshot) => {
+      // hidding loader
+      this.isInit = false;
       this.todos = snapshot.docs.map(doc => {
         const data = doc.data() as Todo;
         const did = doc.id;
         return { did, ...data };
       });
-      // update counter when data changed
+      // updating counter when data changed
       this.counter = this.todos.reduce((obj, item: Todo) => {
         item.isCompleted ? obj.completed++ : obj.active++;
         return obj;
       }, { active: 0, completed: 0 });
     });
-  }
-
-  ngOnDestroy() {
-    this.subcription$.unsubscribe();
-  }
-
-  ngOnInit() {
-    this.action = 'all';
-    this.counter = {
-      active: 0,
-      completed: 0
-    };
   }
 
   todoId(index, todo) {

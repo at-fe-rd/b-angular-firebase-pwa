@@ -1,17 +1,21 @@
 <section class="todos">
   <app-todos-header (addTodo)="onChange('add', $event)"></app-todos-header>
   <section class="todos-main">
-    <ul class="todo-list">
-      <app-todo-item *ngFor="let todo of todos | todoFilter:action; trackBy: todoId"
-                    [todo]="todo"
-                    (deleteMe)="onChange('delete', $event)"
-                    (toggleMe)="onChange('completed', $event)"
-                    ng-non-bindable>
-      </app-todo-item>
-    </ul>
-    <div *ngIf="!todos?.length" class="main-message">You don't have any task.</div>
-    <div *ngIf="(action === 'completed' && !counter?.completed && counter?.active)" class="main-message">{{counter?.active}} task(s) left. Let makes it done!</div>
-    <div *ngIf="(!counter?.active && action === 'active' && todos?.length)" class="main-message">Congrats! You have done all your tasks.</div>
+    <div [loading]="isInit">
+      <ng-template [ngIf]="!isInit">
+        <ul class="todo-list">
+          <app-todo-item *ngFor="let todo of todos | todoFilter:action; trackBy: todoId"
+                        [todo]="todo"
+                        (deleteMe)="onChange('delete', $event)"
+                        (toggleMe)="onChange('completed', $event)"
+                        ng-non-bindable>
+          </app-todo-item>
+        </ul>
+        <div *ngIf="!todos?.length" class="main-message">You don't have any task.</div>
+        <div *ngIf="(action === 'completed' && !counter?.completed && counter?.active)" class="main-message">{{counter?.active}} task(s) left. Let makes it done!</div>
+        <div *ngIf="(!counter?.active && action === 'active' && todos?.length)" class="main-message">Congrats! You have done all your tasks.</div>
+      </ng-template>
+    </div>
   </section> 
   <app-todos-footer (finish)="onChange('finish')" (filter)="action = $event" [counter]="counter"></app-todos-footer> 
 </section>

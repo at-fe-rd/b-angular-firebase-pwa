@@ -82,6 +82,7 @@ $todoTextLeftAlign: convertPxToRem(60px);
     position: relative;
     z-index: 2;
     border-top: 1px solid map-get($color, border);
+    min-height: 80px;
     .main-message {
       font-size: convertPxToRem(14px);
       padding: 25px 15px;

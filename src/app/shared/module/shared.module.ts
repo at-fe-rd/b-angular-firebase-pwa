@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { HeaderModule } from '../layout/header/header.module';
+import { LoadingDirective } from '../directive/loading/loading.directive';
 
 @NgModule({
   imports: [
@@ -16,7 +17,11 @@ import { HeaderModule } from '../layout/header/header.module';
     TranslateModule,
     HeaderModule
   ],
+  declarations: [
+    LoadingDirective
+  ],
   exports: [
+    LoadingDirective,
     HeaderModule,
     RouterModule,
     TranslateModule,
