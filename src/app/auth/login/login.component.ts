@@ -15,11 +15,11 @@ export class LoginComponent implements OnInit {
   errorMsgs: any;
 
   constructor(
-    public firebaseAuth: FirebaseAuthService,
+    private firebaseAuth: FirebaseAuthService,
     private auth: AuthService,
     private router: Router
   ) {
-    // this.canAction = true;
+    this.canAction = true;
     // this.auth.logger.subscribe((data: any) => {
     //   this.errorMsgs = data;
     //   this.canAction = true;
@@ -27,6 +27,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  googleSignin() {
+    this.canAction = false;
+    this.firebaseAuth.googleLogin().then(() => {
+      // this.canAction = true;
+    }).catch(() => {
+      this.canAction = true;
+    });
   }
 
   onSubmit(f: NgForm) {

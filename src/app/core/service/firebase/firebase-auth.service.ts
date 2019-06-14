@@ -47,10 +47,10 @@ export class FirebaseAuthService {
       this.setUserData(credential.user);
       this.updateUserData(credential.user).then((data) => {
         // console.log(data);
+        this.router.navigate(['/']);
       }).catch((error) => {
         // console.log('update error', error);
       });
-      this.router.navigate(['/']);
     }).catch((error) => {
       // console.log('signup error', error);
     });
