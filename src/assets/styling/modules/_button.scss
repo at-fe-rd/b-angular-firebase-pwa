@@ -1,10 +1,11 @@
 .btn-close-panel {
   position: absolute;
+  color: map-get($color, text-secondary);
   @include pxRem(top, 15px);
   @include pxRem(right, 15px);
-  @include pxRem(width, 32px);
-  @include pxRem(height, 32px);
-  @include pxRem(font-size, 32px);
+  @include pxRem(width, 40px);
+  @include pxRem(height, 40px);
+  @include pxRem(font-size, 40px);
   &:before {
     @include font-icon(close);
   }

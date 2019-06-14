@@ -76,10 +76,8 @@ $todoTextLeftAlign: convertPxToRem(60px);
     &:after {
       left: 15px;
       position: absolute;
-      top: 0;
-      bottom: 0;
-      margin: auto 0;
-      height: convertPxToRem(24px);
+      top: 50%;
+      @include transformY(-50%);
       font-size: convertPxToRem(24px);
       display: block;
       font-family: "ipwa";
@@ -90,19 +88,18 @@ $todoTextLeftAlign: convertPxToRem(60px);
       margin: 0;
       width: 100%;
       font-size: convertPxToRem(24px);
-      @include font-smoothing(antialiased);
       padding: 16px 16px 16px 60px;
       border: none;
       font-style: italic;
+      @include font-smoothing(antialiased);
       @include box-shadow(inset 0px 0px 8px 4px rgba(0, 0, 0, 0.03)); 
     }
     .new-task {
       position: absolute;
       right: 15px;
       font-size: convertPxToRem(48px);
-      top: 0;
-      bottom: 0;
-      margin: auto 0;
+      top: 50%;
+      @include transformY(-50%);
       color: map-get($color, primary);
     }
   }
@@ -159,7 +156,7 @@ $todoTextLeftAlign: convertPxToRem(60px);
         position: relative;
         z-index: 1;
         &.counter {
-          color: map-get($color, text-muted);
+          color: map-get($color, text-a);
         }
         .toolbar-btn {
           border: 1px solid transparent;
@@ -200,6 +197,27 @@ $todoTextLeftAlign: convertPxToRem(60px);
           display: block;
         }
       }
+      .item-check {
+        border: none;
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        margin: 0;
+        @include transformY(-50%);
+        @include appearance(none);
+        &:checked {
+          &:after {
+            color: map-get($color, primary);
+            content: "\e90c";
+          }
+        }
+        &:after {
+          font-size: convertPxToRem(32px);
+          font-family: "ipwa";
+          content: "\e90b";
+          color: map-get($color, text-muted);
+        }
+      }
       .item-name {
         white-space: pre-line;
         word-break: break-all;
@@ -215,48 +233,18 @@ $todoTextLeftAlign: convertPxToRem(60px);
       }
       .item-btn {
         display: none;
-        position: absolute;
-        top: 0;
-        right: 15px;
-        bottom: 0;
-        height: 100%;
-        font-size: 30px;
         color: map-get($color, text-muted);
         transition: color 0.2s ease-out;
+        position: absolute;
+        right: 13px;
+        top: 50%;
+        @include transformY(-50%);
+        @include pxRem(font-size, 32px);
         &:after {
           font-family: "ipwa";
           content: "\e909";
         }
       }
-    }
-  }
-  .item-check {
-    text-align: center;
-    width: convertPxToRem(32px);
-    height: convertPxToRem(32px);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 15px;
-    margin: auto 0;
-    border: none;
-    @include appearance(none);
-    &:checked {
-      &:after {
-        color: map-get($color, primary);
-        content: "\e90c";
-      }
-    }
-    &:after {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      margin: auto 0;
-      font-size: convertPxToRem(32px);
-      display: block;
-      font-family: "ipwa";
-      content: "\e90b";
-      color: map-get($color, text-muted);
     }
   }
 }
@@ -311,7 +299,7 @@ $todoTextLeftAlign: convertPxToRem(60px);
           [class*="i-"],
           [class*="n-"] {
             display: block;
-            font-size: convertPxToRem(24px);
+            font-size: convertPxToRem(28px);
           }
           .toolbar-btn {
             border: none;

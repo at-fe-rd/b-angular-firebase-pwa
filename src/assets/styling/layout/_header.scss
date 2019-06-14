@@ -28,6 +28,8 @@
     z-index: 10;
     background: map-get($color, white);
     border-bottom: 1px solid map-get($color, border);
+    height: 60px;
+    padding: 0 15px;
     .logo {
       width: convertPxToRem(40px);
     }
