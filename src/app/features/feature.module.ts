@@ -15,21 +15,6 @@ import { TodoItemComponent } from './todos/todo-item/todo-item.component';
 import { TodoFilterPipe } from 'app/shared/pipe/filter/todo-filter.pipe';
 import { FirebaseAuthGuard } from '../core/service/firebase/firebase-auth-guard';
 
-
-// export const featureRoutes: Routes = [
-//   {
-//     path: '',
-//     redirectTo: 'home',
-//     pathMatch: 'full',
-//     canActivate: [FirebaseAuthGuard]
-//   },
-//   {
-//     path: '',
-//     component: FeatureComponent,
-//     canActivate: [FirebaseAuthGuard]
-//   }
-// ];
-
 const routes: Routes = [
   {
     path: '',

@@ -158,6 +158,9 @@ $todoTextLeftAlign: convertPxToRem(60px);
         text-align: center;
         position: relative;
         z-index: 1;
+        &.counter {
+          color: map-get($color, text-muted);
+        }
         .toolbar-btn {
           border: 1px solid transparent;
           border-radius: 3px;
