@@ -19,9 +19,21 @@
         </a>
       </div>
     </form>
-    <button class="login-btn" (click)="firebaseAuth.googleLogin()">
-      <i class="i-hand-pointer-o block"></i>
-      Connect Google
-    </button>
+    <div class="text-centered">
+      <section>
+        <img class="logo" src="assets/logo/logo-2x.png" alt="FUA PWA">
+        <h1 class="title">Welcome to FUA PWA</h1>
+      </section>
+      <section>
+        <button class="login-btn" (click)="firebaseAuth.googleLogin()">
+          <i class="i-google"></i>
+          Sign up with Google
+        </button>
+        <button class="login-btn" disabled>
+          <i class="i-facebook-f"></i>
+          Sign up with Facebook
+        </button>
+      </section>
+    </div>
   </div>
 </section>

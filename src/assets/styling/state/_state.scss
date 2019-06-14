@@ -8,6 +8,9 @@
 .text-right {
   text-align: right !important;
 }
+.text-left {
+  text-align: left !important;
+}
 .hidden {
   display: none !important;
 }
@@ -16,6 +19,9 @@
 }
 .block {
   display: block;
+}
+.img-circle {
+  border-radius: 50%;
 }
 
 $rootSize : 5;

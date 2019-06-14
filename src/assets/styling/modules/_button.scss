@@ -1,0 +1,11 @@
+.btn-close-panel {
+  position: absolute;
+  @include pxRem(top, 15px);
+  @include pxRem(right, 15px);
+  @include pxRem(width, 32px);
+  @include pxRem(height, 32px);
+  @include pxRem(font-size, 32px);
+  &:before {
+    @include font-icon(close);
+  }
+}

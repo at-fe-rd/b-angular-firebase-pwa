@@ -22,17 +22,45 @@ input[type='checkbox'] {
 @include placeholder() {
   color: map-get($color, text-muted);
 }
-.login-btn {
-  background: map-get($color, primary);
-  color: map-get($color, white);
-  font-size: convertPxToRem(32px);
-  padding: convertPxToRem(30px) convertPxToRem(60px);
-  border-radius: convertPxToRem(5px);
+.login {
   position: fixed;
-  width: 80%;
-  left: 50%;
   top: 50%;
+  left: 50%;
+  width: 80%;
   @include transform(translate(-50%, -50%));
+  .login-btn {
+    border: 1px solid map-get($color, primary);
+    background: map-get($color, white);
+    color: map-get($color, text-secondary);
+    font-size: convertPxToRem(24px);
+    padding: convertPxToRem(16px);
+    width: 100%;
+    cursor: pointer;
+    text-align: left;
+    @include pxRem(margin, 16px 0);
+    &:hover:not(:disabled) {
+      color: map-get($color, primary);
+    }
+    &:disabled {
+      border-color: map-get($color, border-secondary) !important;
+      color: map-get($color, border);
+      cursor: not-allowed;
+    }
+    i {
+      display: inline-block;
+      border-right: 1px solid map-get($color, border);
+      @include pxRem(margin-right, 16px);
+      @include pxRem(width, 40px);
+    }
+  }
+  .logo {
+    margin: 0 auto;
+    @include pxRem(width, 120px);
+  }
+  .title {
+    @include pxRem(font-size, 32px);
+    @include pxRem(margin-bottom, 60px);
+  }
 }
 $todoPrimary: map-get($color, primary);
 $todoTextLeftAlign: convertPxToRem(60px);
@@ -230,6 +258,9 @@ $todoTextLeftAlign: convertPxToRem(60px);
   }
 }
 @include respond-above("medium") {
+  .login {
+    width: 400px;
+  }
   .todos-footer-toolbar {
     flex-grow: 7;
     .toolbar-item {
@@ -263,7 +294,7 @@ $todoTextLeftAlign: convertPxToRem(60px);
     .todos-footer {
       background: map-get($color, white);
       position: fixed;
-      z-index: 9000;
+      z-index: 2;
       bottom: 0;
       width: 100%;
       padding: convertPxToRem(8px) convertPxToRem(15px);

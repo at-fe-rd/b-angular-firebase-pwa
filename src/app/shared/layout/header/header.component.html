@@ -6,7 +6,25 @@
   <h1 class="page-title title-art insetshadow">
     Todos
   </h1>
-  <span class="nav-bar">
-    <i class="i-bars"></i>	
+  <span class="nav-bar text-right">
+    <a (click)="togglePanel(true)">
+      <img class="avatar-circle size-sm" src="{{user.photoURL}}" alt="{{user.displayName}}">
+    </a>
   </span>
+  <aside class="aside-panel animated faster" [ngClass]="{fadeInRight: panelVisible, fadeOutRight: !panelVisible}" *ngIf="panelVisible !== undefined">
+    <ul class="text-left">
+      <li class="f-row f-row-vm text-left">
+        <div class="f-col-2x">
+          <img class="avatar-circle size-md" src="{{user.photoURL}}" alt="{{user.displayName}}">
+        </div>
+        <div class="f-col-10 user-info">
+          <h6 class="name">{{user.displayName}}</h6>
+          <i class="email">{{user.email}}</i>
+        </div>
+        <span class="btn-close-panel" (click)="togglePanel(false)"></span>
+      </li>
+      <li class="menu-item"><a (click)="togglePanel(false)"><i class="i-angle-left"></i>Your Tasks</a></li>
+      <li class="menu-item"><a (click)="signOut()"><i class="i-sign-out"></i>Sign Out</a></li>
+    </ul>
+  </aside>
 </header>

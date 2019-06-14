@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { AuthService } from '../../../core/service/auth/auth.service';
+import { FirebaseAuthService } from '../../../core/service/firebase/firebase-auth.service';
 import { PlatformLocation } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -11,18 +11,22 @@ import { ApiService } from 'app/core/service';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
+
+  panelVisible: boolean;
+  user: any;
   headerOptions: any;
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
-    public auth: AuthService,
+    public firebaseAuth: FirebaseAuthService,
     private location: PlatformLocation,
     private http: HttpClient,
     private apiService: ApiService
-  ) { 
+  ) {
   }
 
   ngOnInit() {
+    this.user = this.firebaseAuth.getUserData();
   }
 
   goBack() {
@@ -31,7 +35,11 @@ export class HeaderComponent implements OnInit {
     this.apiService.ngUnsubscribe.complete();
   }
 
-  logout() {
-    this.auth.logout();
+  signOut() {
+    this.firebaseAuth.signOut();
+  }
+
+  togglePanel(e: boolean) {
+    this.panelVisible = e;
   }
 }

@@ -83,8 +83,8 @@
 }
 @mixin font-icon($icon) {
   content: map-get($font-icon, $icon);
-  font-family: map-get($font-family, icon);
-  -webkit-font-smoothing: antialiased;
+  font-family: $font-family-icon;
+  @include font-smoothing();
 }
 @mixin font-smoothing($value: antialiased) {
   @if $value == antialiased {

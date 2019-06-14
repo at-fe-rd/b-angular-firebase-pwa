@@ -44,17 +44,15 @@ export class FirebaseAuthService {
 
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then((credential: any) => {
-      this.setToken({
-        uid: credential.user.uid
-      });
+      this.setUserData(credential.user);
       this.updateUserData(credential.user).then((data) => {
         // console.log(data);
       }).catch((error) => {
-        console.log('update error', error);
+        // console.log('update error', error);
       });
       this.router.navigate(['/']);
     }).catch((error) => {
-      console.log('signup error', error);
+      // console.log('signup error', error);
     });
   }
 
@@ -73,19 +71,25 @@ export class FirebaseAuthService {
     return localStorage.getItem('uid');
   }
 
-  setToken(data) {
+  getUserData() {
+    return JSON.parse(localStorage.getItem('user'));
+  }
+
+  setUserData(data) {
     localStorage.setItem('uid', data.uid);
+    localStorage.setItem('user', JSON.stringify(data));
   }
 
   removeToken() {
     localStorage.removeItem('uid');
+    localStorage.removeItem('user');
   }
 
   signOut() {
     this.afAuth.auth.signOut().then(() => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/auth/login']);
     }).catch(() => {
-      console.log('error');
+      // console.log('error');
     });
   }
 }

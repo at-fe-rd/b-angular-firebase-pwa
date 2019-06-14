@@ -1,0 +1,12 @@
+.avatar-circle {
+  border-radius: 50%;
+  &.size-xs {
+    @include pxRem(width, 32px);
+  }
+  &.size-sm {
+    @include pxRem(width, 40px);
+  }
+  &.size-md {
+    @include pxRem(width, 60px);
+  }
+}
