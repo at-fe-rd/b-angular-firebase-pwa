@@ -47,8 +47,8 @@ export class FirebaseAuthService {
       this.setUserData(credential.user);
       this.updateUserData(credential.user).then((data) => {
         // console.log(data);
-        this.router.navigate(['/']);
-        // window.location.reload();
+        // this.router.navigate(['/']);
+        window.location.reload();
       }).catch((error) => {
         // console.log('update error', error);
       });
