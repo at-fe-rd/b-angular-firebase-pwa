@@ -4,16 +4,24 @@ import { AuthGuard } from '../core/service/auth/auth-guard';
 import { FirebaseAuthGuard } from '../core/service/firebase/firebase-auth-guard';
 
 
+// export const featureRoutes: Routes = [
+//   {
+//     path: '',
+//     redirectTo: 'home',
+//     pathMatch: 'full',
+//     canActivate: [FirebaseAuthGuard]
+//   },
+//   {
+//     path: '',
+//     component: FeatureComponent,
+//     canActivate: [FirebaseAuthGuard]
+//   }
+// ];
+
 export const featureRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-    canActivate: [FirebaseAuthGuard]
-  },
-  {
-    path: '',
-    component: FeatureComponent,
-    canActivate: [FirebaseAuthGuard]
+    canActivate: [FirebaseAuthGuard],
+    loadChildren: 'app/features/feature.module#FeatureModule'
   }
 ];
