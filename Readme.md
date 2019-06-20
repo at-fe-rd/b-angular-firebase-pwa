@@ -2,7 +2,12 @@
 
 ## Features
 
-TBU...
+1. Installable
+2. Work offline
+3. Background Sync
+4. Real time database, Real time update data on UI
+5. Auth with Google
+6. Animation like Native App Experience
 
 ## Prerequisite
 
