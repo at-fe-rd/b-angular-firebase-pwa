@@ -11,6 +11,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 import { AuthModule } from './auth/auth.module';
@@ -58,6 +59,7 @@ export function tokenGetter() {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     AppRoutingModule,
     CoreModule.forRoot(),
     AuthModule,

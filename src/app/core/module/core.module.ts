@@ -7,6 +7,7 @@ import { I18N_PROVIDERS } from '../service/i18n/i18n.service';
 import { API_PROVIDERS } from '../service/api/api.service';
 import { FirebaseAuthService } from '../service/firebase/firebase-auth.service';
 import { FirebaseAuthGuard } from '../service/firebase/firebase-auth-guard';
+import { FirebaseMessagingService } from '../service/firebase/firebase-messaging.service';
 
 
 const AUTH_PROVIDERS = [
@@ -29,6 +30,7 @@ export class CoreModule {
         AUTH_PROVIDERS,
         I18N_PROVIDERS,
         API_PROVIDERS,
+        FirebaseMessagingService,
         {
           provide: HTTP_INTERCEPTORS,
           useClass: TokenInterceptorService,
